@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Email Checker</title>
+    <script>
+        async function checkSpam() {
+            const emailContent = document.getElementById('emailContent').value;
+            const response = await fetch('/check_spam', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: emailContent })
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = result.is_spam ? 'This email is spam.' : 'This email is not spam.';
+        }
+    </script>
+</head>
+<body>
+    <h1>Spam Email Checker</h1>
+    <textarea id="emailContent" rows="10" cols="50" placeholder="Paste email content here..."></textarea><br>
+    <button onclick="checkSpam()">Check Spam</button>
+    <p id="result"></p>
+</body>
+</html>
